@@ -14,7 +14,7 @@
   <ul class="menu">
     <li><a href="index.html#how">How it works</a></li>
     <li class="has-drop"><span class="drop-trigger"><a href="kits.html">Kits</a> <span>▾</span></span>
-      <div class="dropdown"><a href="product-complete.html">Complete Kit <span class="px">$189</span></a><a href="product-bedding.html">Bedding Kit <span class="px">$100</span></a><a href="product-kitchen.html">Kitchen Kit <span class="px">$120</span></a><a href="product-bathroom.html">Bathroom Kit <span class="px">$30</span></a></div>
+      <div class="dropdown"><a href="product-complete.html">Complete Kit <span class="px">$189</span></a><a href="product-bedding.html">Bedding Kit <span class="px">$100</span></a><a href="product-kitchen.html">Kitchen Kit <span class="px">$120</span></a><a href="product-bathroom.html">Bathroom Kit <span class="px">$50</span></a></div>
     </li>
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#faq">FAQ</a></li>
@@ -43,7 +43,7 @@
             <option value="complete">Complete Kit (Bed + Bath + Cook) — $189</option>
             <option value="bedding">Bedding Kit — $100</option>
             <option value="kitchen">Kitchen Kit — $120</option>
-            <option value="bathroom">Bathroom Kit — $30</option>
+            <option value="bathroom">Bathroom Kit — $50</option>
           </select>
           <div class="err">Please select a kit.</div>
         </div>
@@ -152,38 +152,54 @@
     var total = '$' + p.price;
     var arrFmt = new Date(arrival + 'T00:00:00').toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-    // Fill confirmation
-    document.getElementById('cName').textContent = name.split(' ')[0];
-    document.getElementById('cEmail').textContent = email;
-    document.getElementById('cProduct').textContent = p.name + ' (' + total + ')';
-    document.getElementById('cUni').textContent = uni;
-    document.getElementById('cArrival').textContent = arrFmt;
-    document.getElementById('cAddress').textContent = address;
-    document.getElementById('cTotal').textContent = total;
+    // Submit to Formspree (notifies you by email)
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
 
-    // Build thank-you email (mailto)
-    var subject = 'Your Nestly order is confirmed 🏡';
-    var body =
-      'Hi ' + name + ',\n\n' +
-      'Thanks for ordering with Nestly! Here are your details:\n\n' +
-      'Kit: ' + p.name + '\n' +
-      'Total: ' + total + '\n' +
-      'University: ' + uni + '\n' +
-      'Arrival date: ' + arrFmt + '\n' +
-      'Drop-off address: ' + address + '\n' +
-      'Phone: ' + phone + '\n\n' +
-      'We\'ll coordinate with your residence so your kit is set up and waiting before you arrive.\n' +
-      'Free refund any time before delivery.\n\n' +
-      'Welcome home,\nThe Nestly Team\nhello@nestly.com';
-    document.getElementById('emailLink').href =
-      'mailto:' + encodeURIComponent(email) +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(body);
-
-    // Swap views
-    document.getElementById('checkoutView').classList.add('hidden');
-    document.getElementById('confirmView').classList.remove('hidden');
-    window.scrollTo({top:0, behavior:'smooth'});
+    fetch('https://formspree.io/f/xgoqgoed', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        university: uni,
+        kit: p.name,
+        total: total,
+        arrival_date: arrFmt,
+        delivery_address: address
+      })
+    }).then(function(res){
+      // Redirect to Stripe checkout regardless (swap in real Stripe links below)
+      var squareLinks = {
+        complete: 'https://square.link/u/yzTJBxdl',
+        bedding:  'https://square.link/u/KOt17zUU',
+        kitchen:  'https://square.link/u/9YJMqMRX',
+        bathroom: 'https://square.link/u/7His9Ljc'
+      };
+      var stripeUrl = squareLinks[product];
+      if (stripeUrl) {
+        window.location.href = stripeUrl;
+      } else {
+        // Stripe not set up yet — show confirmation screen
+        document.getElementById('cName').textContent = name.split(' ')[0];
+        document.getElementById('cEmail').textContent = email;
+        document.getElementById('cProduct').textContent = p.name + ' (' + total + ')';
+        document.getElementById('cUni').textContent = uni;
+        document.getElementById('cArrival').textContent = arrFmt;
+        document.getElementById('cAddress').textContent = address;
+        document.getElementById('cTotal').textContent = total;
+        document.getElementById('emailLink').style.display = 'none';
+        document.getElementById('checkoutView').classList.add('hidden');
+        document.getElementById('confirmView').classList.remove('hidden');
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+    }).catch(function(){
+      btn.disabled = false;
+      btn.textContent = 'Place order';
+      alert('Something went wrong. Please try again.');
+    });
   });
 })();
 </script>

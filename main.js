@@ -30,5 +30,5 @@ var NESTLY_PRODUCTS = {
   complete: { name: 'Complete Kit (Bed + Bath + Cook)', price: 189 },
   bedding:  { name: 'Bedding Kit', price: 100 },
   kitchen:  { name: 'Kitchen Kit', price: 120 },
-  bathroom: { name: 'Bathroom Kit', price: 30 }
+  bathroom: { name: 'Bathroom Kit', price: 50 }
 };
