@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Nestly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav"><div class="wrap nav-inner">
+  <a href="index.html" class="logo">nestly<span>.</span></a>
+  <ul class="menu">
+    <li><a href="index.html#how">How it works</a></li>
+    <li class="has-drop"><span class="drop-trigger"><a href="kits.html">Kits</a> <span>▾</span></span>
+      <div class="dropdown"><a href="product-complete.html">Complete Kit <span class="px">$189</span></a><a href="product-bedding.html">Bedding Kit <span class="px">$100</span></a><a href="product-kitchen.html">Kitchen Kit <span class="px">$120</span></a><a href="product-bathroom.html">Bathroom Kit <span class="px">$30</span></a></div>
+    </li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-cta"><a href="kits.html" class="btn btn-primary">Shop Kits</a><button class="hamburger" aria-label="Menu">☰</button></div>
+</div></header>
+
+<!-- CHECKOUT FORM -->
+<section id="checkoutView" style="padding-top:34px">
+  <div class="wrap">
+    <div class="crumbs"><a href="kits.html">Kits</a> / Checkout</div>
+    <h2 style="margin-bottom:6px">Almost home.</h2>
+    <p class="lead">Tell us where and when, and we'll have your kit set up before you arrive.</p>
+
+    <div class="co-grid">
+      <form class="co-form" id="orderForm" novalidate>
+        <div class="two">
+          <div class="field"><label for="name">Full name *</label><input type="text" id="name" placeholder="Jordan Lee"><div class="err">Please enter your name.</div></div>
+          <div class="field"><label for="phone">Phone *</label><input type="tel" id="phone" placeholder="(608) 555-0142"><div class="err">Please enter a phone number.</div></div>
+        </div>
+        <div class="field"><label for="email">Email *</label><input type="email" id="email" placeholder="you@email.com"><div class="err">Please enter a valid email.</div></div>
+        <div class="field"><label for="university">University *</label><input type="text" id="university" placeholder="University of Wisconsin–Madison" value="University of Wisconsin–Madison"><div class="err">Please enter your university.</div></div>
+        <div class="field"><label for="product">Choose your kit *</label>
+          <select id="product">
+            <option value="">Select a kit…</option>
+            <option value="complete">Complete Kit (Bed + Bath + Cook) — $189</option>
+            <option value="bedding">Bedding Kit — $100</option>
+            <option value="kitchen">Kitchen Kit — $120</option>
+            <option value="bathroom">Bathroom Kit — $30</option>
+          </select>
+          <div class="err">Please select a kit.</div>
+        </div>
+        <div class="field"><label for="arrival">Arrival date in your move-in city *</label><input type="date" id="arrival"><div class="err">Please choose your arrival date.</div></div>
+        <div class="field"><label for="address">Drop-off address *</label><input type="text" id="address" placeholder="Residence hall / apartment, street, city, ZIP"><div class="err">Please enter a delivery address.</div></div>
+        <button type="submit" class="btn btn-clay btn-block" style="font-size:17px;padding:16px;margin-top:8px">Place order</button>
+        <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">This is a demo checkout — no payment is taken. You'll get a confirmation screen and an order email draft.</p>
+      </form>
+
+      <aside class="summary">
+        <h3>Order summary</h3>
+        <div class="sum-row"><span id="sumName">Select a kit</span><span id="sumPrice">—</span></div>
+        <div class="sum-row"><span>Delivery (on/near campus)</span><span style="color:var(--sage-dark);font-weight:600">Free</span></div>
+        <div class="sum-total"><span>Total</span><span id="sumTotal">$0</span></div>
+        <div class="tier-note" style="margin-top:20px">🔒 Free refund any time before delivery. We coordinate drop-off with your residence so your kit is waiting when you land.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIRMATION -->
+<section id="confirmView" class="hidden">
+  <div class="confirm">
+    <div class="check">✓</div>
+    <h2>Order received, <span id="cName">friend</span>!</h2>
+    <p class="lead" style="margin:0 auto">Thanks for choosing Nestly. Your kit will be set up and waiting before your arrival date. A confirmation has been sent to <strong id="cEmail">your email</strong>.</p>
+    <div class="order-box">
+      <div><span>Kit</span><strong id="cProduct">—</strong></div>
+      <div><span>University</span><strong id="cUni">—</strong></div>
+      <div><span>Arrival date</span><strong id="cArrival">—</strong></div>
+      <div><span>Drop-off</span><strong id="cAddress">—</strong></div>
+      <div style="border-top:1px solid var(--line);margin-top:6px;padding-top:12px"><span>Total</span><strong id="cTotal">—</strong></div>
+    </div>
+    <a id="emailLink" class="btn btn-primary" href="#">📧 Send my confirmation email</a>
+    <div style="margin-top:14px"><a href="index.html" class="btn btn-light">Back to home</a></div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div><div class="logo">nestly<span style="color:var(--clay)">.</span></div><p class="lead">Premium arrival kits for students. Delivered before you arrive.</p></div>
+    <div class="foot-col"><h4>Shop</h4><a href="product-complete.html">Complete Kit</a><a href="product-bedding.html">Bedding Kit</a><a href="product-kitchen.html">Kitchen Kit</a><a href="product-bathroom.html">Bathroom Kit</a></div>
+    <div class="foot-col"><h4>Company</h4><a href="index.html#about">About</a><a href="index.html#how">How it works</a><a href="index.html#faq">FAQ</a></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 Nestly. All rights reserved.</span><span>Madison, WI · hello@nestly.com</span></div>
+</div></footer>
+
+<script src="main.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('orderForm');
+  var sel = document.getElementById('product');
+
+  // Pre-select kit from ?product= URL param
+  var params = new URLSearchParams(location.search);
+  var pre = params.get('product');
+  if (pre && NESTLY_PRODUCTS[pre]) sel.value = pre;
+
+  function fmt(n){ return '$' + n.toLocaleString(); }
+
+  function updateSummary(){
+    var p = NESTLY_PRODUCTS[sel.value];
+    if (p){
+      document.getElementById('sumName').textContent = p.name;
+      document.getElementById('sumPrice').textContent = fmt(p.price);
+      document.getElementById('sumTotal').textContent = fmt(p.price);
+    } else {
+      document.getElementById('sumName').textContent = 'Select a kit';
+      document.getElementById('sumPrice').textContent = '—';
+      document.getElementById('sumTotal').textContent = '$0';
+    }
+  }
+  sel.addEventListener('change', updateSummary);
+  updateSummary();
+
+  function setErr(id, bad){
+    document.getElementById(id).parentElement.classList.toggle('invalid', bad);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var phone = document.getElementById('phone').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var uni = document.getElementById('university').value.trim();
+    var product = sel.value;
+    var arrival = document.getElementById('arrival').value;
+    var address = document.getElementById('address').value.trim();
+
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    var bad = false;
+    setErr('name', !name); bad = bad || !name;
+    setErr('phone', !phone); bad = bad || !phone;
+    setErr('email', !emailOk); bad = bad || !emailOk;
+    setErr('university', !uni); bad = bad || !uni;
+    setErr('product', !product); bad = bad || !product;
+    setErr('arrival', !arrival); bad = bad || !arrival;
+    setErr('address', !address); bad = bad || !address;
+    if (bad){
+      var first = form.querySelector('.invalid');
+      if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    var p = NESTLY_PRODUCTS[product];
+    var total = '$' + p.price;
+    var arrFmt = new Date(arrival + 'T00:00:00').toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+    // Fill confirmation
+    document.getElementById('cName').textContent = name.split(' ')[0];
+    document.getElementById('cEmail').textContent = email;
+    document.getElementById('cProduct').textContent = p.name + ' (' + total + ')';
+    document.getElementById('cUni').textContent = uni;
+    document.getElementById('cArrival').textContent = arrFmt;
+    document.getElementById('cAddress').textContent = address;
+    document.getElementById('cTotal').textContent = total;
+
+    // Build thank-you email (mailto)
+    var subject = 'Your Nestly order is confirmed 🏡';
+    var body =
+      'Hi ' + name + ',\n\n' +
+      'Thanks for ordering with Nestly! Here are your details:\n\n' +
+      'Kit: ' + p.name + '\n' +
+      'Total: ' + total + '\n' +
+      'University: ' + uni + '\n' +
+      'Arrival date: ' + arrFmt + '\n' +
+      'Drop-off address: ' + address + '\n' +
+      'Phone: ' + phone + '\n\n' +
+      'We\'ll coordinate with your residence so your kit is set up and waiting before you arrive.\n' +
+      'Free refund any time before delivery.\n\n' +
+      'Welcome home,\nThe Nestly Team\nhello@nestly.com';
+    document.getElementById('emailLink').href =
+      'mailto:' + encodeURIComponent(email) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    // Swap views
+    document.getElementById('checkoutView').classList.add('hidden');
+    document.getElementById('confirmView').classList.remove('hidden');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>
