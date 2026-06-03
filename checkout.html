@@ -68,6 +68,15 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
           <div class="err">Please select a kit.</div>
         </div>
         <div class="field"><label for="arrival">Arrival date in your move-in city *</label><input type="date" id="arrival"><div class="err">Please choose your arrival date.</div></div>
+        <div style="margin-top:-10px;margin-bottom:16px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);cursor:pointer">
+            <input type="checkbox" id="datesUnknown" style="width:16px;height:16px;cursor:pointer;accent-color:var(--clay)">
+            I don't know my exact dates yet
+          </label>
+          <div id="datesMsg" style="display:none;margin-top:8px;padding:10px 14px;background:#f0faf4;border-left:3px solid #2d7a4f;border-radius:4px;font-size:13px;color:#2d7a4f;line-height:1.5">
+            ✓ No problem — you can still place your order. Just email <a href="mailto:hello@nestlykits.com" style="color:#2d7a4f;font-weight:600">hello@nestlykits.com</a> once your dates are confirmed and we'll coordinate delivery from there.
+          </div>
+        </div>
         <div class="field"><label for="address">Drop-off address *</label><input type="text" id="address" placeholder="Residence hall / apartment, street, city, ZIP"><div class="err">Please enter a delivery address.</div></div>
         <button type="submit" class="btn btn-clay btn-block" style="font-size:17px;padding:16px;margin-top:8px">Place order</button>
         <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">This is a demo checkout — no payment is taken. You'll get a confirmation screen and an order email draft.</p>
@@ -139,6 +148,22 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
   sel.addEventListener('change', updateSummary);
   updateSummary();
 
+  // "I don't know my dates yet" toggle
+  var datesCheckbox = document.getElementById('datesUnknown');
+  var datesMsg = document.getElementById('datesMsg');
+  var arrivalInput = document.getElementById('arrival');
+  datesCheckbox.addEventListener('change', function(){
+    if (this.checked) {
+      datesMsg.style.display = 'block';
+      arrivalInput.disabled = true;
+      arrivalInput.value = '';
+      arrivalInput.parentElement.classList.remove('invalid');
+    } else {
+      datesMsg.style.display = 'none';
+      arrivalInput.disabled = false;
+    }
+  });
+
   function setErr(id, bad){
     document.getElementById(id).parentElement.classList.toggle('invalid', bad);
   }
@@ -154,13 +179,14 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
     var address = document.getElementById('address').value.trim();
 
     var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    var datesUnknown = document.getElementById('datesUnknown').checked;
     var bad = false;
     setErr('name', !name); bad = bad || !name;
     setErr('phone', !phone); bad = bad || !phone;
     setErr('email', !emailOk); bad = bad || !emailOk;
     setErr('university', !uni); bad = bad || !uni;
     setErr('product', !product); bad = bad || !product;
-    setErr('arrival', !arrival); bad = bad || !arrival;
+    if (!datesUnknown) { setErr('arrival', !arrival); bad = bad || !arrival; }
     setErr('address', !address); bad = bad || !address;
     if (bad){
       var first = form.querySelector('.invalid');
@@ -170,7 +196,7 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
 
     var p = NESTLY_PRODUCTS[product];
     var total = '$' + p.price;
-    var arrFmt = new Date(arrival + 'T00:00:00').toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    var arrFmt = datesUnknown ? 'TBD — customer will email to confirm' : new Date(arrival + 'T00:00:00').toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
     // Submit to Formspree (notifies you by email)
     var btn = form.querySelector('button[type=submit]');
