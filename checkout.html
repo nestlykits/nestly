@@ -88,7 +88,7 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
           </div>
         </div>
         <button type="submit" class="btn btn-clay btn-block" style="font-size:17px;padding:16px;margin-top:8px">Place order</button>
-        <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:12px">This is a demo checkout — no payment is taken. You'll get a confirmation screen and an order email draft.</p>
+
       </form>
 
       <aside class="summary">
@@ -107,7 +107,7 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
   <div class="confirm">
     <div class="check">✓</div>
     <h2>Order received, <span id="cName">friend</span>!</h2>
-    <p class="lead" style="margin:0 auto">Thanks for choosing Nestly. Your kit will be set up and waiting before your arrival date. A confirmation has been sent to <strong id="cEmail">your email</strong>.</p>
+    <p class="lead" style="margin:0 auto">Thanks for choosing Nestly. Your kit will be delivered and waiting before your arrival date. A confirmation has been sent to <strong id="cEmail">your email</strong>.</p>
     <div class="order-box">
       <div><span>Kit</span><strong id="cProduct">—</strong></div>
       <div><span>University</span><strong id="cUni">—</strong></div>
@@ -244,7 +244,7 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
         delivery_address: addrFmt
       })
     }).then(function(res){
-      // Redirect to Stripe checkout regardless (swap in real Stripe links below)
+      // Redirect to Square checkout
       var squareLinks = {
         complete: 'https://square.link/u/yzTJBxdl',
         bedding:  'https://square.link/u/KOt17zUU',
@@ -255,7 +255,7 @@ src="https://www.facebook.com/tr?id=1670818640704688&ev=PageView&noscript=1"
       if (stripeUrl) {
         window.location.href = stripeUrl;
       } else {
-        // Stripe not set up yet — show confirmation screen
+        // Fallback confirmation screen
         document.getElementById('cName').textContent = name.split(' ')[0];
         document.getElementById('cEmail').textContent = email;
         document.getElementById('cProduct').textContent = p.name + ' (' + total + ')';
